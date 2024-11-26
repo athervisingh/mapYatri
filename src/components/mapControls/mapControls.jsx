@@ -1,38 +1,55 @@
 import * as React from "react";
 import {
   Navigation,
-  Info,
+  Globe,
   Share2,
-  MousePointer2,
+  MapPinned,
   HelpCircle,
   X,
+  Braces,
+  SlidersHorizontal,
 } from "lucide-react";
 import NavigationControl from "./Controls/navigation.control";
+import ShareContent from "./Controls/share.component";
+import MLModelComponent from "./Controls/settings.component";
 
 export function MapControls({ isAdding, setIsAdding }) {
   const [activePanel, setActivePanel] = React.useState(null);
-  const [customContent, setCustomContent] = React.useState(null); // For rendering handler
+  const [customContent, setCustomContent] = React.useState(null);
+  const [activeMarker, setActiveMarker] = React.useState(null);  // Track active marker
 
   const controls = [
-    // Navigation control handler will only show the custom content, no sidebar toggle
-    {
-      icon: Navigation,
-      label: "Show My Location",
-      handler: () => setCustomContent(<NavigationControl />),
-    },
-    { icon: Info, label: "Info", panel: "info" },
+    { icon: Navigation, label: "Show My Location", panel: "navigation" },
+    { icon: Globe, label: "Community", panel: "community" },
     { icon: Share2, label: "Share", panel: "share" },
+    { icon: Braces, label: "Geo Json", panel: "geojson" },
+    { icon: SlidersHorizontal, label: "Settings", panel: "settings" },
     {
-      icon: MousePointer2,
-      label: isAdding ? "Stop Adding Markers" : "Add Marker", // Dynamic label
-      handler: () => {
-        setIsAdding((prev) => !prev); // Toggle isAdding
-        setActivePanel(null); // Close sidebar if open
-        setCustomContent(null); // Clear custom content
-      },
+      icon: MapPinned,
+      label: isAdding ? "Stop Adding Markers" : "Add Marker",
+      panel: "add-marker",
     },
     { icon: HelpCircle, label: "Help", panel: "help" },
   ];
+
+  const handleControlClick = (control) => {
+    if (control.panel === "add-marker") {
+      setIsAdding((prev) => !prev);
+      setActivePanel(null);
+      setCustomContent(null);
+    } else if (control.panel === "navigation") {
+      setCustomContent(<NavigationControl />);
+      setActivePanel(null);
+    } else {
+      setActivePanel(activePanel === control.panel ? null : control.panel); 
+      setCustomContent(null);
+    }
+  };
+
+  const handleMarkerClick = (markerId) => {
+    // Toggle the clicked state for the marker
+    setActiveMarker((prev) => (prev === markerId ? null : markerId));
+  };
 
   return (
     <div className="absolute right-0 top-0 flex justify-between h-full z-[1000]">
@@ -43,26 +60,28 @@ export function MapControls({ isAdding, setIsAdding }) {
         }`}
       >
         <div className="flex items-center justify-between border-b px-4 py-3 text-white">
-          <h2 className="text-lg font-semibold capitalize">
+          <h1 className="text-lg font-semibold capitalize">
             {activePanel || ""}
-          </h2>
+          </h1>
           <button
             className="p-2 rounded hover:bg-gray-600"
             onClick={() => {
               setActivePanel(null);
-              setCustomContent(null); // Close custom content
+              setCustomContent(null);
             }}
           >
             <X className="h-5 w-5 text-white" />
           </button>
         </div>
-        {/* <div className="p-4 text-white">
-          {customContent ? (
-            customContent
-          ) : (
-            <p>Content for {activePanel} goes here...</p>
+        <div className="p-4 text-white">
+          {customContent || (
+            <>
+              {activePanel === "share" && <ShareContent />}
+              {activePanel === "settings" && <MLModelComponent />}
+              {/* Add other panel components as needed */}
+            </>
           )}
-        </div> */}
+        </div>
       </div>
 
       {/* Controls */}
@@ -75,17 +94,9 @@ export function MapControls({ isAdding, setIsAdding }) {
           <button
             key={control.label}
             title={control.label}
-            onClick={() => {
-              if (control.handler) {
-                control.handler(); // Execute handler if defined (like Add Marker)
-              } else {
-                setActivePanel(
-                  activePanel === control.panel ? null : control.panel
-                ); // Toggle sidebar
-              }
-            }}
+            onClick={() => handleControlClick(control)}
             className={`flex items-center justify-center h-10 w-10 rounded-lg bg-gray-700 hover:bg-gray-600 ${
-              (activePanel === control.panel) ? "bg-teal-600" : ""
+              activePanel === control.panel ? "bg-teal-600" : ""
             }`}
           >
             <control.icon className="h-5 w-5 text-white" />
@@ -93,6 +104,8 @@ export function MapControls({ isAdding, setIsAdding }) {
           </button>
         ))}
       </div>
+
+     
     </div>
   );
 }

@@ -7,11 +7,10 @@ import { Routes, Route } from "react-router-dom";
 function App() {
   return (
     <>
+    <Navigation/>
       <Routes>
-        <Route path="/" element={<Navigation/>}>
           <Route index element={<HomePage/>}/>
           <Route path="/developer" element={<DeveloperPage/>}></Route>
-        </Route>
       </Routes>
     </>
   );

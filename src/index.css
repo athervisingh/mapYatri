@@ -6,11 +6,13 @@
 :root{
   --bg-color : #212529;
   --button-color: #374151;
+  --button-select-color: #0d9488;
 }
 
 body {
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 .leaflet-left {
   background-color: var(--bg-color);
@@ -62,7 +64,7 @@ body {
 
 .leaflet-control {
   margin: 0 !important;
-  background: none !important;
+  /* background: none !important; */
 }
 .leaflet-control-zoom{
   padding: 2px 4px ;
@@ -70,7 +72,7 @@ body {
 
 .leaflet-bar,
 .leaflet-draw-toolbar {
-  background: transparent !important;
+  /* background: transparent !important; */
   border: none !important;
   box-shadow: none !important;
   margin-top: 2px !important;
@@ -154,6 +156,3 @@ body {
 
 }
 
-.leaflet-bottom .leaflet-right{
-  z-index: 1001 !important;
-}

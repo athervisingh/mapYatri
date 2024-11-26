@@ -7,6 +7,7 @@ import SegmentButton from "../../components/segmentButton/segmentButton";
 import MapUpdater from "../../components/mapUpdater/mapUpdater";
 import {MapControls} from '../../components/mapControls/mapControls';
 import MapClickHandler from "../../components/mapControls/Controls/marker.component";
+import { Toaster } from 'sonner'
 
 const MapPage = ({ developerMode }) => {
   const params = new URLSearchParams(window.location.search);
@@ -18,7 +19,6 @@ const MapPage = ({ developerMode }) => {
 
   const [markers, setMarkers] = useState([]); // Store marker positions
   const [isAdding, setIsAdding] = useState(false); // Toggle for adding markers
-
   return (
     <div>
       <MapContainer
@@ -39,6 +39,7 @@ const MapPage = ({ developerMode }) => {
         <MapUpdater />  
         {developerMode && <MapControls isAdding={isAdding} setIsAdding={setIsAdding} />}
       </MapContainer>
+      <Toaster position="top-center" expand={false}/>
     </div>
   );
 };
