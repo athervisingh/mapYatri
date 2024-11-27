@@ -161,3 +161,13 @@ body {
 
 }
 
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip{
+  background: var(--bg-color ) !important;
+  color: var(--button-select-color) !important;
+  margin:10px;
+}
+.leaflet-popup-close-button{
+  color: #fff !important;
+}

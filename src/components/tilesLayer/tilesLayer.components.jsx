@@ -1,5 +1,6 @@
 import { TileLayer, LayersControl } from "react-leaflet";
 const TilesLayer = () => {
+  const MAP_API_KEY = import.meta.env.VITE_MAP_API_KEY
   return (
        <LayersControl data-tour="satellite-btn" position="bottomright">
           <LayersControl.BaseLayer name="Simple Map">
@@ -10,7 +11,7 @@ const TilesLayer = () => {
 
           <LayersControl.BaseLayer checked name="Satellite Map">
             <TileLayer
-              url="https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=QqTSNEE2UIK0e5wGBlP6"
+              url={`https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=${MAP_API_KEY}`}
             />
           </LayersControl.BaseLayer>
         </LayersControl>

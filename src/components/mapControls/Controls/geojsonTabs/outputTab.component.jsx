@@ -1,6 +1,6 @@
 import { Copy, Download } from "lucide-react";
 import { useState } from "react";
-import './geojsonTabs.css';
+import '../../mapControls.css';
 import { toast} from 'sonner';
 
 const OutputTab = () => {

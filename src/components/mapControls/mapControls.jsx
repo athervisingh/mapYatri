@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import {
   Navigation,
   Globe,
@@ -10,14 +10,15 @@ import {
   SlidersHorizontal,
 } from "lucide-react";
 import { useMap } from "react-leaflet";
-import { flyToCurrentLocation } from '../../Utility/NavigationFlying'
+import { flyToCurrentLocation } from "../../Utility/NavigationFlying";
 import ShareContent from "./Controls/share.component";
 import MLModelComponent from "./Controls/settings.component";
 import CommunityComp from "./Controls/community.component";
 import GeoJSONTabManager from "./Controls/geojson.component";
+import MarkerManager from "./Controls/marker.component";
 
-export function MapControls({setLoading }) {
-  const [activePanel, setActivePanel] = React.useState(null);
+export function MapControls({ setLoading, markers, setMarkers }) {
+  const [activePanel, setActivePanel] = useState(null);
   const map = useMap(); // Get the map instance
 
   const controls = [
@@ -26,32 +27,9 @@ export function MapControls({setLoading }) {
     { icon: Share2, label: "Share", panel: "share" },
     { icon: Braces, label: "Geo Json", panel: "geojson" },
     { icon: SlidersHorizontal, label: "Settings", panel: "settings" },
-    {
-      icon: MapPinned,
-      label: "Add Marker",
-      panel: "add-marker",
-    },
+    { icon: MapPinned, label: "Add Marker", panel: "add-marker" },
     { icon: HelpCircle, label: "Help", panel: "help" },
   ];
-
-  React.useEffect(() => {
-    if(activePanel){
-      map.dragging.disable();
-      // map.keyboard.disable();
-
-    }else{
-      map.dragging.enable();
-      // map.keyboard.enable();
-    }
-    
-    return () => {
-      map.dragging.enable();
-      // map.keyboard.enable();
-    };
-  }, [activePanel, map]);
-
-
-
   const handleControlClick = (control) => {
     if (control.panel === "navigation") {
       flyToCurrentLocation(map, setLoading); // Trigger utility function
@@ -61,6 +39,14 @@ export function MapControls({setLoading }) {
     }
   };
 
+  const handleMouseEnter = () => {
+    map.dragging.disable();
+  };
+
+  const handleMouseLeave = () => {
+    map.dragging.enable(); 
+  };
+
   return (
     <div className="absolute right-0 top-0 flex justify-between h-full z-[1000]">
       {/* Sidebar */}
@@ -68,6 +54,8 @@ export function MapControls({setLoading }) {
         className={`h-full w-72 bg-bg-color shadow-lg transform transition-transform duration-300 ${
           activePanel ? "translate-x-0 z-[2000]" : "translate-x-full z-[2000]"
         }`}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         <div className="flex items-center justify-between border-b px-4 py-3 text-white">
           <h1 className="text-lg font-semibold capitalize">
@@ -85,6 +73,13 @@ export function MapControls({setLoading }) {
           {activePanel === "settings" && <MLModelComponent />}
           {activePanel === "geojson" && <GeoJSONTabManager />}
           {activePanel === "community" && <CommunityComp />}
+          {activePanel === "add-marker" && (
+            <MarkerManager
+              markers={markers}
+              setMarkers={setMarkers}
+              activePanel={activePanel}
+            />
+          )}
         </div>
       </div>
 
@@ -100,7 +95,7 @@ export function MapControls({setLoading }) {
             title={control.label}
             onClick={() => handleControlClick(control)}
             className={`flex items-center justify-center h-10 w-10 rounded-lg bg-gray-700 hover:bg-gray-600 ${
-              activePanel === control.panel ? "bg-button-select-color" : ""
+              activePanel === control.panel ? "!bg-button-select-color" : ""
             }`}
           >
             <control.icon className="h-5 w-5 text-white" />

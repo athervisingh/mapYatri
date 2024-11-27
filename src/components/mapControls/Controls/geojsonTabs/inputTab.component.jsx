@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Copy, FolderInput, Pencil, Save, X } from "lucide-react";
-import './geojsonTabs.css';
+import '../../mapControls.css';
 import { toast} from 'sonner';
 
 const InputTab = () => {
