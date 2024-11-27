@@ -7,9 +7,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        'bg-color': '#212529',
-        'button-color': '#374151',
-        'button-select-color': '#0d9488',
+        'bg-color': 'var(--bg-color)',
+        'button-color': 'var(--button-color)',
+        'button-select-color': 'var(--button-select-color)',
       },
     },
   },

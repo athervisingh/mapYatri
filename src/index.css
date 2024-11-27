@@ -1,7 +1,12 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.calendar-white-icon::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(1.5);
+  transform: scale(1.5);
+  margin-right: 2%;
+}
 
 :root{
   --bg-color : #212529;

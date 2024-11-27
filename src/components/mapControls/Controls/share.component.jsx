@@ -93,7 +93,7 @@ const ShareContent = () => {
                 onClick={() => setActiveTab(tab)}
                 className={`px-4 py-2 rounded-md transition-colors ${
                   activeTab === tab 
-                    ? 'bg-blue-600 text-white' 
+                    ? 'bg-[#0d9488] text-white' 
                     : 'bg-gray-700 hover:bg-gray-600 text-gray-200'
                 }`}
               >
@@ -136,16 +136,22 @@ const ShareContent = () => {
           <h3 className="text-xl font-semibold mb-4">Downloads</h3>
           <div className="space-y-3">
             <button
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors"
+              className="w-full bg-button-select-color hover:bg-teal-700 text-white py-2 px-4 rounded-md transition-colors"
               onClick={() => handleDownload('PDF')}
             >
               Download PDF
             </button>
             <button
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors"
+              className="w-full bg-button-select-color hover:bg-teal-700 text-white py-2 px-4 rounded-md transition-colors"
               onClick={() => handleDownload('GeoJSON')}
             >
               Download GeoJSON
+            </button>
+            <button
+              className="w-full bg-button-select-color hover:bg-teal-700 text-white py-2 px-4 rounded-md transition-colors"
+              onClick={() => handleDownload('GeoJSON')}
+            >
+              Download Tiff
             </button>
           </div>
         </div>

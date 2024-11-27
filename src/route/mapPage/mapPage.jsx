@@ -6,8 +6,8 @@ import DrawControl from "../../components/drawControls/drawControls.component";
 import SegmentButton from "../../components/segmentButton/segmentButton";
 import MapUpdater from "../../components/mapUpdater/mapUpdater";
 import {MapControls} from '../../components/mapControls/mapControls';
-import MapClickHandler from "../../components/mapControls/Controls/marker.component";
 import { Toaster } from 'sonner'
+import Loading from "../../components/Loading";
 
 const MapPage = ({ developerMode }) => {
   const params = new URLSearchParams(window.location.search);
@@ -17,8 +17,7 @@ const MapPage = ({ developerMode }) => {
     YAxis: parseFloat(params.get("lon")) || 77.209,
   };
 
-  const [markers, setMarkers] = useState([]); // Store marker positions
-  const [isAdding, setIsAdding] = useState(false); // Toggle for adding markers
+  const [loading, setLoading] = useState(false);
   return (
     <div>
       <MapContainer
@@ -28,18 +27,15 @@ const MapPage = ({ developerMode }) => {
         doubleClickZoom={false}
         minZoom={4}
       >
-        <MapClickHandler isAdding={isAdding} setMarkers={setMarkers} />
-        {markers.map((marker, index) => (
-          <Marker key={index} position={marker.position} />
-        ))}
+        {loading && <Loading/>}
 
         <TilesLayer />
         <DrawControl />
         <SegmentButton />
         <MapUpdater />  
-        {developerMode && <MapControls isAdding={isAdding} setIsAdding={setIsAdding} />}
+        {developerMode && <MapControls setLoading={setLoading}/>}
       </MapContainer>
-      <Toaster position="top-center" expand={false}/>
+      <Toaster position="top-center" expand={false} duration={2000}/>
     </div>
   );
 };

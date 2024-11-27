@@ -1,7 +1,9 @@
 import React from 'react';
 import { ChevronDown } from 'lucide-react';
 
-const ModelSelector = ({ selectedModel, handleModelChange, models }) => {
+const ModelSelector = ({selectedModel, setSelectedModel}) => {
+  const models = ['Mahalanobis Model', 'Maximum LikelyHood', 'Rain Forest Classifier', 'Parallelopiped'];
+  const handleModelChange = (e) => setSelectedModel(e.target.value);
   return (
     <div className="relative">
       <select
