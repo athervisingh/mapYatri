@@ -15,6 +15,7 @@
     "leaflet-compass": "^1.5.6",
     "leaflet-draw": "^1.0.4",
     "leaflet-rotatedmarker": "^0.2.0",
+    "lucide-react": "^0.460.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-leaflet": "^4.2.1",
@@ -22,7 +23,8 @@
     "react-router-dom": "^7.0.1",
     "redux": "^5.0.1",
     "redux-logger": "^3.0.6",
-    "reselect": "^5.1.1"
+    "reselect": "^5.1.1",
+    "sonner": "^1.7.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",

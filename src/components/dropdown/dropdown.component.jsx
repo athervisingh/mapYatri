@@ -38,7 +38,7 @@ const Dropdown = ({ label, items }) => {
       </button>
 
       {isOpen && (
-        <div className="absolute z-10 mt-2 w-full rounded-md bg-white shadow-lg">
+        <div className="absolute z-[1000] mt-2 w-full rounded-md bg-white shadow-lg">
           <ul className="py-1 text-sm text-gray-700 max-h-40 overflow-y-auto">
             {items.map((item, index) => (
               <li
